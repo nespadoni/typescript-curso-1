@@ -10,6 +10,11 @@ export class Negociacao {
         const data = new Date(this._data.getTime());
         return data; 
     }
+
+    get quantidade(): number {
+        const quantidade = new Number(this._quantidade.valueOf())
+        return quantidade;
+    }
     
     get volume(): number {
         return this._quantidade * this._valor
