@@ -1,6 +1,7 @@
-import { Negociacao } from "../models/negociacao.js";
-import { NegociacoesView } from "../views/negociacoes-view.js";
-import { Negociacoes } from "./negociacoes.js";
+import {Negociacao} from "../models/negociacao.js";
+import {NegociacoesView} from "../views/negociacoes-view.js";
+import {Negociacoes} from "./negociacoes.js";
+import {MensagemView} from "../views/mensagem-view.js";
 
 export class NegociacaoController {
     private inputData: HTMLInputElement;
@@ -8,6 +9,7 @@ export class NegociacaoController {
     private inputValor: HTMLInputElement;
     private negociacoes = new Negociacoes();
     private negociacoesView = new NegociacoesView('#negociacoesView');
+    private mensagemView = new MensagemView('#mensagemView');
 
     constructor() {
         this.inputData = document.querySelector('#data');
@@ -17,18 +19,18 @@ export class NegociacaoController {
     }
 
     adiciona(): void {
-        const negociacao = this.criaNegociacao()
+        const negociacao = this.criaNegociacao();
         this.negociacoes.adiciona(negociacao);
-        this.negociacoes.lista()
-        console.log(this.negociacoes.lista());
-        this.limparFormulario()
+        this.negociacoesView.update(this.negociacoes);
+        this.mensagemView.update('Negociação adicionada com sucesso!');
+        this.limparFormulario();
     }
 
     criaNegociacao(): Negociacao {
         const exp = /-/g;
-        const date = new Date(this.inputData.value.replace(exp,','));
-        const quantidade = parseInt(this.inputQuantidade.value)
-        const valor = parseFloat(this.inputValor.value)
+        const date = new Date(this.inputData.value.replace(exp, ','));
+        const quantidade = parseInt(this.inputQuantidade.value);
+        const valor = parseFloat(this.inputValor.value);
         return new Negociacao(date, quantidade, valor);
     }
 
